@@ -1,0 +1,18 @@
+name: docker-compose-actions-workflow
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the stack
+        run: |
+          cp sr/.env.example src/.env
+          docker-compose build
+          docker-compose run --rm --user `id -u`:`id -g` composer install
+          docker-compose up -d
+          docker-compose exec php php /var/www/html/artisan migrate
+      - name: Run the tests
+        run: |
+          docker-compose exec php php /var/www/html/artisan migrate --env=testing
+          docker-compose exec php /var/www/html/vendor/bin/phpunit
