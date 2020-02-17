@@ -11,8 +11,8 @@ jobs:
           docker-compose build
           docker-compose run --rm --user `id -u`:`id -g` composer install
           docker-compose up -d
-          docker-compose exec php php /var/www/html/artisan migrate
+          docker-compose exec -T php php /var/www/html/artisan migrate
       - name: Run the tests
         run: |
-          docker-compose exec php php /var/www/html/artisan migrate --env=testing
-          docker-compose exec php /var/www/html/vendor/bin/phpunit
+          docker-compose exec -T php php /var/www/html/artisan migrate --env=testing
+          docker-compose exec -T php /var/www/html/vendor/bin/phpunit
