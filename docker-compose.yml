@@ -22,7 +22,6 @@ services:
     image: postgres
     container_name: postgres
     restart: unless-stopped
-    tty: true
     volumes: 
       - ./pg-init-scripts:/docker-entrypoint-initdb.d
     ports:
