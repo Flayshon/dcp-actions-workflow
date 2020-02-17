@@ -7,7 +7,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the stack
         run: |
-          cp sr/.env.example src/.env
+          cp src/.env.example src/.env
           docker-compose build
           docker-compose run --rm --user `id -u`:`id -g` composer install
           docker-compose up -d
